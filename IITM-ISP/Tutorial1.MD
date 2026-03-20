@@ -410,3 +410,490 @@ If you want next level understanding, I can:
 * Or convert this into **exam-ready notes + cheat sheet**
 
 Just tell me 👍
+---
+
+Perfect — now we go into **deep, exam-grade derivations** for Q3, Q4, Q12. I’ll walk exactly like a TA at the board, building everything from first principles, no jumps.
+
+---
+
+# 🔴 Q3: Warping a Circle using an Affine Transform
+
+## 🧠 Step 0: What is happening?
+
+We are given:
+
+* A **circle** in ((x, y))
+* An **affine transform** (A)
+* Asked: *What is the new equation and shape?*
+
+---
+
+## 🔹 Step 1: Write everything in homogeneous coordinates
+
+Circle:
+[
+x^2 + y^2 = 4
+]
+
+Affine transform:
+[
+A =
+\begin{bmatrix}
+1 & 0.2 & 1 \
+0 & 1 & 1 \
+0 & 0 & 1
+\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 2: Understand forward mapping
+
+[
+\begin{bmatrix}
+x' \
+y' \
+1
+\end{bmatrix}
+=============
+
+A
+\begin{bmatrix}
+x \
+y \
+1
+\end{bmatrix}
+]
+
+So:
+
+[
+x' = x + 0.2y + 1
+]
+[
+y' = y + 1
+]
+
+---
+
+## 🔹 Step 3: IMPORTANT IDEA (Core Trick)
+
+We **do NOT substitute forward**.
+
+👉 We must express **old coordinates in terms of new**
+(i.e., inverse transform)
+
+---
+
+## 🔹 Step 4: Solve inverse mapping
+
+From:
+[
+y' = y + 1 \Rightarrow y = y' - 1
+]
+
+Substitute into (x'):
+
+[
+x' = x + 0.2(y' - 1) + 1
+]
+
+[
+x' = x + 0.2y' - 0.2 + 1
+]
+
+[
+x' = x + 0.2y' + 0.8
+]
+
+[
+x = x' - 0.2y' - 0.8
+]
+
+---
+
+## 🔹 Step 5: Substitute into circle equation
+
+[
+(x' - 0.2y' - 0.8)^2 + (y' - 1)^2 = 4
+]
+
+---
+
+## 🔹 Step 6: Expand fully (exam important)
+
+First term:
+[
+(x' - 0.2y' - 0.8)^2
+]
+
+[
+= x'^2 + 0.04y'^2 + 0.64 - 0.4x'y' - 1.6x' + 0.32y'
+]
+
+Second term:
+[
+(y' - 1)^2 = y'^2 - 2y' + 1
+]
+
+---
+
+## 🔹 Step 7: Combine all terms
+
+[
+x'^2 + (0.04 + 1)y'^2 - 0.4x'y' + (-1.6)x' + (0.32 - 2)y' + (0.64 + 1) = 4
+]
+
+[
+x'^2 + 1.04y'^2 - 0.4x'y' - 1.6x' - 1.68y' + 1.64 = 4
+]
+
+---
+
+## 🔹 Step 8: Final equation
+
+[
+x'^2 + 1.04y'^2 - 0.4x'y' - 1.6x' - 1.68y' - 2.36 = 0
+]
+
+---
+
+## 🎯 Final Answer
+
+### Shape:
+
+👉 **Ellipse**
+
+### Why?
+
+* Quadratic with (x'^2, y'^2, xy)
+* Affine transform → ellipse
+
+---
+
+## 🔥 Exam Insight
+
+* Circle → ellipse under affine
+* Cross term (x'y') indicates **rotation/shear**
+
+---
+
+# 🔴 Q4: Deriving Homography (Translation → Rotation)
+
+---
+
+## 🧠 Step 0: What is happening?
+
+We are deriving:
+
+[
+H =
+\begin{bmatrix}
+c & -s & cp - sq \
+s & c & sp + cq \
+0 & 0 & 1
+\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 1: Camera model (given)
+
+* (K = I)
+* Planar scene
+* Homography:
+
+[
+H = R + \frac{t n^T}{d}
+]
+
+---
+
+## 🔹 Step 2: Assume plane
+
+Plane:
+[
+Z = d
+]
+
+Normal:
+[
+n = \begin{bmatrix}0 \ 0 \ 1\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 3: Translation first
+
+Let translation:
+
+[
+t = \begin{bmatrix}p \ q \ 0\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 4: Rotation matrix (Z-axis)
+
+[
+R =
+\begin{bmatrix}
+c & -s & 0 \
+s & c & 0 \
+0 & 0 & 1
+\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 5: Compute (tn^T)
+
+[
+n^T = [0 ; 0 ; 1]
+]
+
+[
+t n^T =
+\begin{bmatrix}
+p \
+q \
+0
+\end{bmatrix}
+[0 ; 0 ; 1]
+===========
+
+\begin{bmatrix}
+0 & 0 & p \
+0 & 0 & q \
+0 & 0 & 0
+\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 6: Divide by (d = 1)
+
+Same matrix.
+
+---
+
+## 🔹 Step 7: Add with rotation
+
+[
+H = R + tn^T
+]
+
+[
+H =
+\begin{bmatrix}
+c & -s & p \
+s & c & q \
+0 & 0 & 1
+\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 8: Apply rotation AFTER translation
+
+Now rotation affects translation:
+
+[
+\begin{bmatrix}
+p' \
+q'
+\end{bmatrix}
+=============
+
+\begin{bmatrix}
+c & -s \
+s & c
+\end{bmatrix}
+\begin{bmatrix}
+p \
+q
+\end{bmatrix}
+]
+
+[
+p' = cp - sq
+]
+[
+q' = sp + cq
+]
+
+---
+
+## 🎯 Final Homography
+
+[
+H =
+\begin{bmatrix}
+c & -s & cp - sq \
+s & c & sp + cq \
+0 & 0 & 1
+\end{bmatrix}
+]
+
+---
+
+## 🔥 Key Insight
+
+👉 Order matters:
+
+* Translate → Rotate ⇒ rotated translation
+
+---
+
+# 🔴 Q12: Diagonalization using DFT
+
+---
+
+## 🧠 Step 0: Concept
+
+DFT diagonalizes **circulant matrices**
+
+Given:
+
+[
+A =
+\begin{bmatrix}
+3 & -1 & 2 \
+2 & 3 & -1 \
+-1 & 2 & 3
+\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 1: Check structure
+
+Each row is a **cyclic shift** → circulant
+
+---
+
+## 🔹 Step 2: First row defines matrix
+
+[
+[3, -1, 2]
+]
+
+---
+
+## 🔹 Step 3: Eigenvalues using DFT
+
+For (N=3):
+
+[
+\omega = e^{-j2\pi/3}
+]
+
+Eigenvalues:
+
+[
+\lambda_k = a_0 + a_1 \omega^k + a_2 \omega^{2k}
+]
+
+---
+
+## 🔹 Step 4: Compute eigenvalues
+
+### (k=0)
+
+[
+\lambda_0 = 3 - 1 + 2 = 4
+]
+
+---
+
+### (k=1)
+
+[
+\omega = -\frac{1}{2} - j\frac{\sqrt{3}}{2}
+]
+
+[
+\lambda_1 = 3 - \omega + 2\omega^2
+]
+
+Compute:
+
+[
+= 3 + \frac{1}{2} + j\frac{\sqrt{3}}{2} + 2\left(-\frac{1}{2} + j\frac{\sqrt{3}}{2}\right)
+]
+
+[
+= 3 + 0.5 -1 + j\left(\frac{\sqrt{3}}{2} + \sqrt{3}\right)
+]
+
+[
+= 2.5 + j\frac{3\sqrt{3}}{2}
+]
+
+---
+
+### (k=2)
+
+[
+\lambda_2 = \text{conjugate}
+]
+
+[
+= 2.5 - j\frac{3\sqrt{3}}{2}
+]
+
+---
+
+## 🔹 Step 5: Final diagonal matrix
+
+[
+D =
+\begin{bmatrix}
+4 & 0 & 0 \
+0 & 2.5 + j\frac{3\sqrt{3}}{2} & 0 \
+0 & 0 & 2.5 - j\frac{3\sqrt{3}}{2}
+\end{bmatrix}
+]
+
+---
+
+## 🔹 Step 6: Final relation
+
+[
+A = F^{-1} D F
+]
+
+---
+
+## 🔥 Key Insight
+
+* DFT basis = eigenvectors
+* Circulant matrices → diagonal in Fourier domain
+
+---
+
+# 🧠 FINAL TAKEAWAYS (VERY IMPORTANT)
+
+### Q3
+
+* Always use **inverse mapping**
+* Circle → ellipse
+
+### Q4
+
+* Homography = rotation + translated plane effect
+* Order matters
+
+### Q12
+
+* Recognize circulant matrix instantly
+* Use DFT shortcut (don’t brute force eigenvalues)
+
+---
+
+If you want next level mastery, I can:
+
+* Give **exam-type tricky variations** of these 3 questions
+* Or convert these into a **1-page revision sheet + memory tricks**
+
+Just tell me 👍
