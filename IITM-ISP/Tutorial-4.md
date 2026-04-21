@@ -1215,3 +1215,112 @@ Just tell me 👍
 
 
 
+
+
+Yes — let’s build a **clear, exam-ready flowchart** of your program. I’ll make it structured so you can **reproduce it in a lab exam or explain it verbally**.
+
+---
+
+# 🔷 🧭 Flowchart of Shape From Focus Program
+
+```
+START
+  │
+  ▼
+Load .mat file (stack.mat)
+  │
+  ▼
+Extract number of frames (N)
+  │
+  ▼
+FOR each frame i = 1 to N
+  │
+  ├── Read frame_i
+  ├── Convert to float
+  └── Store in list
+  │
+  ▼
+Convert list → NumPy array
+  │
+  ▼
+Transpose array → (H, W, N)
+  │
+  ▼
+FOR each q in {0,1,2}
+  │
+  ▼
+Initialize focus_volume (H × W × N)
+  │
+  ▼
+FOR each frame k = 1 to N
+  │
+  ├── Extract image = frames[:,:,k]
+  │
+  ├── Compute Modified Laplacian:
+  │       Ix = second derivative (x-direction)
+  │       Iy = second derivative (y-direction)
+  │       ML = |Ix| + |Iy|
+  │
+  ├── Apply SML (windowing):
+  │       Sum ML over neighborhood (size = 2q+1)
+  │
+  └── Store result in focus_volume[:,:,k]
+  │
+  ▼
+Compute depth index:
+depth_index(x,y) = argmax over k of focus_volume
+  │
+  ▼
+Convert to depth:
+depth = depth_index × delta_d
+  │
+  ▼
+Generate meshgrid (X,Y)
+  │
+  ▼
+Plot 3D surface:
+Z = depth
+  │
+  ▼
+Repeat for next q
+  │
+  ▼
+END
+```
+
+---
+
+# 🔷 🧠 How to Explain This Flowchart in Viva
+
+If examiner asks *“Explain your flow”*, you can say:
+
+> “First, we load the stack of images with different focus levels.
+> Then, for each image, we compute a focus measure using the modified Laplacian, which captures edge sharpness.
+> We then apply a neighborhood summation (SML) to make the measure robust.
+> Next, for every pixel, we select the image where the focus measure is maximum using argmax.
+> This index corresponds to the depth, which we scale using delta_d.
+> Finally, we plot the depth map as a 3D surface and repeat this process for different window sizes q.”
+
+---
+
+# 🔷 🔥 Key Insight Embedded in Flowchart
+
+The **most important block** is:
+
+```
+Compute ML → Apply SML → Argmax
+```
+
+👉 That is the **core of Shape From Focus**
+
+---
+
+# 🔷 🎯 If You Want Next Level
+
+I can:
+
+* Convert this into a **clean diagram (image/PDF style)**
+* Give you a **1-page revision sheet**
+* Or simulate how examiner will grill you on each block
+
+Just tell me 👍
