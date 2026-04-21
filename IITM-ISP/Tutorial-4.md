@@ -1324,3 +1324,206 @@ I can:
 * Or simulate how examiner will grill you on each block
 
 Just tell me 👍
+
+
+
+
+Good — now we move from *code understanding* → **physical interpretation**, which is what examiners really care about.
+
+---
+
+# 🔷 1. What are you looking at?
+
+This plot is a **3D reconstruction of the scene using focus information**.
+
+### Axes:
+
+* **X axis** → horizontal pixel position
+* **Y axis** → vertical pixel position
+* **Z axis (height)** → **depth (distance from camera)**
+
+---
+
+# 🔷 2. What does the shape mean?
+
+Look at the plot:
+
+* Middle region → **high (yellow/green dome)**
+* Edges → **low (purple/blue)**
+* Corners → **very sharp spikes**
+
+---
+
+## 🔵 Interpretation
+
+### 🟡 Center (Dome shape)
+
+* This region has **highest depth values**
+* Meaning:
+
+  > These pixels became sharp in **later frames (higher k)**
+
+👉 So:
+
+* These points are **farther from the camera**
+
+---
+
+### 🔵 Edges (Low region)
+
+* Low depth values
+* Meaning:
+
+  > These pixels were sharp in **earlier frames**
+
+👉 So:
+
+* These points are **closer to the camera**
+
+---
+
+### 🔺 Sharp spikes at corners
+
+⚠️ These are **artifacts (not real shape)**
+
+Why?
+
+* Borders have poor neighborhood support
+* Laplacian behaves badly at edges
+* SML window is incomplete
+
+👉 In viva, say:
+
+> “The spikes near boundaries are due to edge effects and unreliable focus measure near image borders.”
+
+---
+
+# 🔷 3. What does this tell about the 100 frames?
+
+This is the **key insight**.
+
+You had:
+
+* 100 images
+* Each focused at increasing depth
+
+---
+
+## 🔵 What the plot tells:
+
+> Different parts of the scene come into focus at different frames
+
+---
+
+### Example interpretation:
+
+* Edge pixels → sharp in frame ~10
+* Mid pixels → sharp in frame ~50
+* Center pixels → sharp in frame ~90
+
+---
+
+👉 So:
+
+> The stack of 100 frames is essentially scanning depth from near → far
+
+---
+
+# 🔷 4. What shape should you deduce?
+
+The surface looks like:
+
+> **A convex dome / curved object**
+
+---
+
+## 🔵 Meaning physically:
+
+* Object is **closer at edges**
+* Object is **farther at center**
+
+---
+
+### Possible real-world shape:
+
+* Bowl (inverted)
+* Dome
+* Curved surface
+
+---
+
+# 🔷 5. Why is it smooth?
+
+Because:
+
+* Depth changes gradually
+* SML smoothing (q) reduces noise
+
+---
+
+# 🔷 6. Key takeaway (VERY IMPORTANT)
+
+> The depth map is not random — it directly represents the **geometry of the object**
+
+---
+
+# 🔷 7. What did SFF successfully do?
+
+From just 2D images, it recovered:
+
+✅ Relative depth
+✅ Shape of surface
+✅ Smooth geometry
+
+---
+
+# 🔷 8. Limitations visible in this plot
+
+You can point these out in viva:
+
+### ❌ Boundary artifacts
+
+(spikes)
+
+### ❌ Flat regions (if any)
+
+* May be inaccurate
+
+### ❌ Noise in some areas
+
+* Due to weak texture
+
+---
+
+# 🔷 9. One-line strong interpretation (Viva)
+
+> “The depth map shows a convex surface where the center appears farther from the camera compared to the edges. This indicates that different regions come into focus at different frames, allowing reconstruction of the 3D shape using focus variation.”
+
+---
+
+# 🔷 10. Deep Insight (Professor-level)
+
+> This plot is essentially:
+> [
+> \text{Depth}(x,y) = k^*(x,y) \cdot \Delta d
+> ]
+
+Where:
+
+* (k^*) = frame where pixel is sharpest
+
+So this surface is literally:
+
+> **“Focus index map converted into geometry”**
+
+---
+
+# 🔷 If you want next
+
+We can go deeper into:
+
+* Why the shape is specifically dome-like (optics explanation)
+* Compare q = 0,1,2 outputs
+* Identify failure regions quantitatively
+
+Just tell me 👍
