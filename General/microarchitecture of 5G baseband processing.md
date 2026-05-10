@@ -1145,3 +1145,712 @@ That single idea is why:
 * 5G becomes scalable.
 
 
+
+
+
+
+how fast is the data coming over the air 
+20MHz or 100MHz or 500MHz how the bandwidth is scanned and data colelcted
+in 1 second ow much daa is collected and number of RBs / resource mapping diagram how it translates / maps into this diagram's processing blocks and sequence ? 
+protocol says certain things 
+we have transport, logical , physical channels etc.
+how all of this falls into place or maps into these microarchitecture block processing sequence
+
+
+
+Now you are asking the *real systems question*:
+
+> How does the abstract 5G protocol/resource grid become an actual real-time hardware dataflow pipeline?
+
+This is exactly how modem architects think.
+
+The confusion usually comes because 3GPP describes things in:
+
+* logical abstractions
+* channels
+* RBs
+* slots
+* symbols
+
+while hardware sees:
+
+* DMA streams
+* SRAM buffers
+* FFT windows
+* vector engines
+* LDPC accelerators
+
+The PHY microarchitecture is the bridge between these worlds.
+
+---
+
+# 1. First: What Is Actually Coming Over the Air?
+
+The antenna receives a **continuous analog electromagnetic waveform**.
+
+Not packets.
+Not RBs.
+Not bits.
+
+Just:
+
+```text id="4o02u5"
+Voltage vs time
+```
+
+The receiver samples this waveform.
+
+---
+
+# 2. Example: 100 MHz NR Carrier
+
+Suppose:
+
+| Parameter         | Value     |
+| ----------------- | --------- |
+| Carrier bandwidth | 100 MHz   |
+| SCS               | 30 kHz    |
+| FR1               | Sub-6 GHz |
+| MIMO              | 4x4       |
+
+---
+
+# 3. ADC Sampling Rate
+
+Nyquist says:
+
+Need sampling rate ≥ bandwidth.
+
+Practical NR implementations for 100 MHz often use:
+
+```text id="8qfsyf"
+122.88 MSPS
+```
+
+(Million samples/sec)
+
+per antenna chain.
+
+---
+
+# If 4 receive antennas:
+
+```text id="k2lgm1"
+4 × 122.88M samples/sec
+```
+
+Each sample has:
+
+* I (real)
+* Q (imaginary)
+
+Often:
+
+* 12 bits I
+* 12 bits Q
+
+So raw incoming digital data rate:
+
+Approximately:
+
+```text id="q2wzk2"
+4 × 122.88M × 24 bits
+≈ 11.8 Gbps
+```
+
+just entering baseband.
+
+Before decoding anything.
+
+---
+
+# 4. What Is “Bandwidth Scanning”?
+
+The receiver does NOT scan frequency like old radios.
+
+Instead:
+
+the RF frontend + ADC digitize the *entire channel bandwidth simultaneously.*
+
+Example:
+
+```text id="e41brq"
+Entire 100 MHz captured at once
+```
+
+Then FFT separates frequencies digitally.
+
+This is the revolutionary OFDM idea.
+
+---
+
+# Old Radio (pre-OFDM)
+
+Old receivers:
+
+* tuned narrowband channels individually
+
+Like:
+
+* rotating radio dial.
+
+---
+
+# OFDM Receiver
+
+Modern OFDM receiver:
+
+```text id="rfk4zr"
+capture huge bandwidth
+→ FFT splits into subcarriers
+```
+
+like a prism splitting white light into colors.
+
+---
+
+# 5. Where Do RBs Come From?
+
+After FFT.
+
+Before FFT:
+
+receiver has:
+
+```text id="m2j7k8"
+time-domain samples
+```
+
+After FFT:
+
+receiver gets:
+
+```text id="11b7q7"
+frequency bins (subcarriers)
+```
+
+---
+
+# Resource Block (RB)
+
+An RB is:
+
+| Dimension | Size            |
+| --------- | --------------- |
+| Frequency | 12 subcarriers  |
+| Time      | 1 slot duration |
+
+At 30 kHz SCS:
+
+```text id="ex6h1r"
+12 × 30 kHz = 360 kHz
+```
+
+per RB.
+
+---
+
+# Example: 100 MHz NR @ 30 kHz
+
+Maximum usable RBs:
+
+~273 RBs.
+
+---
+
+# Frequency Domain Visualization
+
+```text id="fjh1ya"
+|RB1|RB2|RB3|...|RB273|
+```
+
+Each RB contains 12 subcarriers.
+
+---
+
+# 6. What FFT Actually Produces
+
+Suppose FFT size = 4096.
+
+FFT output:
+
+```text id="2pd2ei"
+Bin0
+Bin1
+Bin2
+...
+Bin4095
+```
+
+Each bin corresponds to one subcarrier frequency.
+
+Now scheduler says:
+
+```text id="d54tt8"
+User A → RBs 0-50
+User B → RBs 51-120
+User C → RBs 121-200
+```
+
+PHY extracts only allocated RBs.
+
+This is resource extraction block.
+
+---
+
+# 7. Time Structure
+
+5G organizes time hierarchically.
+
+---
+
+# Frame Structure
+
+At 30 kHz SCS:
+
+| Unit              | Duration |
+| ----------------- | -------- |
+| Frame             | 10 ms    |
+| Subframe          | 1 ms     |
+| Slot              | 0.5 ms   |
+| OFDM symbols/slot | 14       |
+
+---
+
+# Data Flow Timing
+
+Every:
+
+```text id="x1nd7f"
+0.5 ms
+```
+
+receiver must:
+
+* process all symbols
+* estimate channel
+* decode LDPC
+* send HARQ ACK/NACK
+
+This is extremely hard.
+
+---
+
+# 8. How Much Data Per Second?
+
+Let's estimate.
+
+---
+
+# Raw OFDM Resources
+
+For 100 MHz, 30 kHz:
+
+Approximately:
+
+| Quantity     | Value |
+| ------------ | ----- |
+| RBs          | 273   |
+| Subcarriers  | 3276  |
+| Symbols/slot | 14    |
+| Slots/sec    | 2000  |
+
+Total REs/sec:
+
+```text id="c7gyy6"
+3276 × 14 × 2000
+≈ 91.7 million REs/sec
+```
+
+---
+
+# If using 256-QAM
+
+Each RE carries:
+
+```text id="5lo22f"
+8 bits
+```
+
+Ignoring overhead:
+
+```text id="e6u4xg"
+91.7M × 8
+≈ 733 Mbps
+```
+
+single layer.
+
+With:
+
+* 4 layers MIMO
+
+≈ several Gbps.
+
+---
+
+# Resource Grid Mapping
+
+This is the key abstraction.
+
+---
+
+# Time-Frequency Grid
+
+Each RE is:
+
+| Frequency    | Time     |
+| ------------ | -------- |
+| Subcarrier k | Symbol n |
+
+So PHY creates giant matrix:
+
+```text id="f11y8r"
+resource_grid[subcarrier][symbol]
+```
+
+---
+
+# Some REs carry:
+
+| RE Type | Purpose            |
+| ------- | ------------------ |
+| PDSCH   | User data          |
+| DMRS    | Channel estimation |
+| PTRS    | Phase tracking     |
+| PDCCH   | Control            |
+| PBCH    | Broadcast          |
+
+---
+
+# Example Grid
+
+```text id="7i7h1n"
+Freq ↑
+
+DMRS DATA DATA DATA
+DATA DATA DATA DATA
+DATA PTRS DATA DATA
+
+      → Time
+```
+
+---
+
+# 9. How This Maps Into Hardware Blocks
+
+NOW we connect protocol ↔ microarchitecture.
+
+This is the important bridge.
+
+---
+
+# Protocol Layer View
+
+3GPP says:
+
+```text id="7vqk5h"
+Transport Block
+→ Channel Coding
+→ Modulation
+→ Layer Mapping
+→ Resource Mapping
+```
+
+---
+
+# Hardware View
+
+Actual chip does:
+
+```text id="25azhb"
+DMA fetch
+→ LDPC accelerator
+→ Interleaver SRAM
+→ QAM mapper
+→ MIMO matrix engine
+→ Resource grid writer
+→ FFT engine
+```
+
+---
+
+# 10. Channel Hierarchy
+
+This confuses many people.
+
+---
+
+# Logical Channels
+
+“What type of information?”
+
+Examples:
+
+| Logical Channel | Meaning           |
+| --------------- | ----------------- |
+| DTCH            | User data         |
+| DCCH            | Control signaling |
+
+Handled mostly by MAC/RLC.
+
+---
+
+# Transport Channels
+
+“How is it transported?”
+
+Examples:
+
+| Transport Channel | Meaning                 |
+| ----------------- | ----------------------- |
+| DL-SCH            | Downlink shared channel |
+| UL-SCH            | Uplink shared           |
+| BCH               | Broadcast               |
+
+Transport channels define:
+
+* coding
+* HARQ
+* scheduling
+
+---
+
+# Physical Channels
+
+“What actual REs carry it?”
+
+Examples:
+
+| Physical Channel | Meaning                  |
+| ---------------- | ------------------------ |
+| PDSCH            | Physical downlink shared |
+| PUSCH            | Physical uplink shared   |
+| PBCH             | Broadcast                |
+| PDCCH            | Control                  |
+
+These map onto actual OFDM resources.
+
+---
+
+# 11. Full Mapping Example
+
+Suppose:
+You download YouTube video.
+
+---
+
+# Step 1 — IP Packet
+
+Application generates data.
+
+---
+
+# Step 2 — MAC
+
+MAC scheduler decides:
+
+```text id="t5l1qq"
+User gets:
+RBs 50-100
+Slot #245
+MCS 22
+4 MIMO layers
+```
+
+---
+
+# Step 3 — Transport Block
+
+MAC forms:
+
+```text id="fc0f2g"
+Transport Block
+```
+
+---
+
+# Step 4 — PHY Processing
+
+Transport block enters:
+
+| PHY Block        | Operation           |
+| ---------------- | ------------------- |
+| CRC              | Add error detection |
+| LDPC             | Add redundancy      |
+| Rate match       | Match RB allocation |
+| QAM mapper       | Bits → symbols      |
+| Layer mapping    | MIMO streams        |
+| Precoding        | Beamforming         |
+| Resource mapping | Fill RE grid        |
+
+---
+
+# 12. Resource Mapping Hardware
+
+This is literally memory addressing.
+
+Hardware writes symbols into:
+
+```text id="25jlwm"
+grid[subcarrier][symbol][antenna]
+```
+
+according to scheduler grants.
+
+---
+
+# 13. Then OFDM Generation
+
+IFFT converts:
+
+```text id="pw3wjm"
+frequency grid
+```
+
+into:
+
+```text id="p4fkk9"
+time-domain waveform
+```
+
+Now DAC + RF transmit it.
+
+---
+
+# 14. Receiver Does Reverse
+
+Receiver:
+
+```text id="1b55wc"
+ADC samples
+→ FFT
+→ recover subcarriers
+→ extract allocated RBs
+→ equalize
+→ demodulate
+→ LDPC decode
+```
+
+---
+
+# 15. Important Insight:
+
+# PHY Is Really a Streaming Matrix Processor
+
+Modern 5G PHY is basically:
+
+* gigantic FFT engine
+* gigantic matrix algebra engine
+* gigantic error-correction engine
+
+processing:
+
+```text id="6mjlwm"
+time × frequency × antenna
+```
+
+data cube continuously.
+
+---
+
+# 16. Why Order Matters
+
+Because each stage reveals structure.
+
+---
+
+# Before FFT
+
+Receiver sees:
+
+```text id="6q9f7m"
+mixed waveform
+```
+
+---
+
+# After FFT
+
+Receiver sees:
+
+```text id="f1xk5y"
+frequency-separated subcarriers
+```
+
+---
+
+# After Resource Extraction
+
+Receiver sees:
+
+```text id="wsmq3d"
+only this user's RBs
+```
+
+---
+
+# After Equalization
+
+Receiver sees:
+
+```text id="7cvxyo"
+clean constellation points
+```
+
+---
+
+# After LDPC
+
+Receiver sees:
+
+```text id="ixx7c9"
+reliable bits
+```
+
+---
+
+# 17. Real Modem Parallelism
+
+Real chips do NOT process serially like software.
+
+They pipeline everything.
+
+Example:
+
+| Engine       | Simultaneously Doing |
+| ------------ | -------------------- |
+| FFT engine   | Slot N               |
+| Equalizer    | Slot N-1             |
+| LDPC decoder | Slot N-2             |
+| HARQ manager | Slot N-3             |
+
+All concurrently.
+
+---
+
+# 18. Final Mental Model
+
+The entire 5G PHY is:
+
+## A giant real-time conveyor belt
+
+converting:
+
+```text id="jlwm5s"
+Electromagnetic waveform
+↔
+Structured time-frequency resource grid
+↔
+Reliable bits
+```
+
+using:
+
+* FFTs
+* matrix operations
+* probabilistic decoding
+* beamforming
+* synchronization
+
+all within microseconds.
