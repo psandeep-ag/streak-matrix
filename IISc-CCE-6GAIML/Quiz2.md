@@ -3,8 +3,10 @@
 
 Quiz-2
 AI/ML for wireless communications
-Hi, pullasandeep@yahoo.com. When you submit this form, the owner will see your name and email address.
-1
+
+## 1
+
+
 Figure shows four different cases of timing offset, in which the estimated starting point is exact, a little earlier, too early, or a little later than the exact timing instance.
 In which cases, it is essential to apply a symbol timing offset scheme to prevent STOs and which cases it needs not. Mark the correct options listed below?
 
@@ -26,7 +28,12 @@ CASE-IV: ISI occurs, ICI occurs, and need to apply a symbol timing offset scheme
 CASE-III: ISI occurs, ICI occurs, and it is not essential to apply a symbol timing offset scheme to prevent STOs
 
 CASE-I: ISI occurs, ICI does not occur, and there is no need to apply a symbol timing offset scheme to prevent STOs
-2
+
+
+
+## 2
+
+
 Identify the STO for this
 (0.5 Points)
 
@@ -38,7 +45,14 @@ All the above are correct.
 STO can be found by minimizing the difference between NG sample block (seized in window W1) and the conjugate of another NG sample block (seized in window W2).
 
 STO can be found by maximizing the square of the correlation between a block of NG samples (seized in window W1) and another between a block of NG samples (seized in window W2).
-3
+
+
+
+## 3
+
+
+
+
 What is the center frequency and bandwidth for the below power spectrum which is normalized with noise power    [Note: consider the marked details to solve this.]
 (0.5 Points)
 
@@ -51,7 +65,14 @@ Bandwidth = 159 Hz, center frequency=875Hz
 Bandwidth = 1000 Hz, center frequency=5500Hz
 
 Bandwidth = 1000 Hz, center frequency=5000Hz
-4
+
+
+
+## 4
+
+
+
+
 Write a program to perform Symbol Timing Offset (STO) estimation in an OFDM system using the Convolutional Neural Network (CNN) model. Use a dataset of received OFDM symbols with known STO values to train the CNN. Evaluate the model's estimation accuracy and minimum absolute error(MAE) on a test dataset. Instructions: 
  Generated synthetic OFDM data with random STO values is available in QUIZ 2 folder from files section.
  details of the generated data listed below
@@ -78,7 +99,11 @@ Evaluate the Mean Absolute Error (MAE) on the test set.
 (1 Point)
 enter a numerical answer up to two decimals only (i.e., truncate your answer up to 2 decimals)
 1.96
-5
+
+
+## 5
+
+
 Write a program to perform Symbol Timing Offset (STO) estimation in an OFDM system using the Convolutional Neural Network (CNN) model. Use a dataset of received OFDM symbols with known STO values to train the CNN. Evaluate the model's estimation accuracy and minimum absolute error(MAE) on a test dataset. Instructions: 
  Generated synthetic OFDM data with random STO values is available in QUIZ 2 folder from files section.
  details of the generated data listed below
@@ -107,7 +132,10 @@ enter a numerical answer up to two decimals only (i.e., truncate your answer up 
 
 [Note: enter the fractional value not a percentage]
 0.32
-6
+
+
+## 6
+
 Using the K-Nearest Neighbours (KNN) algorithm, classify modulation schemes based on their signal constellation points. Generated datasets for BPSK, QPSK, and 8-PSK modulation schemes with AWGN noise is given and use KNN to classify them. Evaluate the classification accuracy.  Instructions:  
   
 Generated 300000 samples for each modulation scheme with AWGN noise with SNR of 10      dB. (open QUIZ 2 folder from files to access the dataset).
@@ -125,7 +153,10 @@ Report      the classification accuracy in percentage
 (1 Point)
 enter a numerical answer up to two decimals only (i.e., truncate your answer up to 2 decimals)
 0.23
-7
+
+
+## 7
+
 Using the K-Nearest Neighbours (KNN) algorithm, classify modulation schemes based on their signal constellation points. Generated datasets for BPSK, QPSK, and 8-PSK modulation schemes with AWGN noise is given and use KNN to classify them. Evaluate the improvement in classification accuracy for different K_neighbours values.  Instructions:  
   
 Generated 300000 samples for each modulation scheme with AWGN noise with SNR of 10      dB. (open QUIZ 2 folder from files to access the dataset).
@@ -143,7 +174,11 @@ Report      the percentage improvement in classification accuracy from k=5 to k=
 (1 Point)
 enter a numerical answer up to two decimals only (i.e., truncate your answer up to 2 decimals)
 -3.19
-8
+
+
+## 8
+
+
 Implement Support Vector Machine (SVM) classification to detect BPSK signals in the presence of noise and interference. Generate a dataset with BPSK signals and Gaussian noise, train the SVM classifier, and evaluate its performance using a confusion matrix. 
   
 Instructions:  
@@ -172,7 +207,9 @@ Compute      the confusion matrix on the test set.
 (1 Point)
 enter a numerical answer up to two decimals only (i.e., truncate your answer up to 2 decimals)
 0
-9
+
+
+## 9
 Implement Support Vector Machine (SVM) classification to detect BPSK signals in the presence of noise and interference. Generate a dataset with BPSK signals and Gaussian noise, train the SVM classifier, and evaluate its performance using a confusion matrix.  Instructions:  
   
 set      random seeds for reproducibility, (use np.random.seed(42) # NumPy      random module seed)
@@ -199,7 +236,8 @@ Compute      the confusion matrix on the test set.
 (1 Point)
 enter a numerical answer up to two decimals only (i.e., truncate your answer up to 2 decimals)
 75.28
-10
+
+## 10
 
 (0.5 Points)
 
@@ -214,7 +252,9 @@ b
 d
 
 a
-11
+
+
+## 11
 Consider an AWGN channel with bandwidth 50 MHZ, received signal power 10 mw. and noise PSD No/2, where No =2*10^(-9) W/Hz. How much does capacity increase by doubling the received power.
 (0.5 Points)
 
@@ -232,7 +272,9 @@ By doubling the received power, capacity will increase by 1.924 times
 By doubling the received power, capacity will increase by 1.914 times
 
 None of the above
-12
+
+
+## 12
 Consider an AWGN channel with bandwidth 50 MHZ, received signal power 10 mw. and noise PSD No/2, where No =2*10^(-9) W/Hz. How much does capacity increase by channel bandwidth.
 (0.5 Points)
 
@@ -248,7 +290,9 @@ By doubling the bandwidth, capacity will increase by 1.02 times
 None of the above
 
 By doubling the bandwidth, capacity will increase by 1.06 times
-13
+
+
+## 13
 
 (0.5 Points)
 
@@ -264,7 +308,9 @@ b
 d
 
 f
-14
+
+
+## 14
 
 (0.5 Points)
 
@@ -277,7 +323,9 @@ b
 c
 
 d
-15
+
+
+## 15
 
 (0.5 Points)
 
@@ -290,7 +338,9 @@ c
 d
 
 a
-16
+
+
+## 16
 
 (0.5 Points)
 
@@ -303,7 +353,9 @@ b
 d
 
 c
-17
+
+
+## 17
 
 (0.5 Points)
 
@@ -316,7 +368,9 @@ d
 c
 
 b
-18
+
+
+## 18
 
 (0.5 Points)
 
@@ -328,7 +382,9 @@ c
 a
 
 d
-19
+
+
+## 19
 What is the primary benefit of using machine learning in dynamic power allocation for wireless networks?
 (0.5 Points)
 
@@ -340,7 +396,9 @@ Ensures consistent power supply
 Simplifies the underlying hardware requirements
 
 Reduces the necessity for manual intervention
-20
+
+
+## 20
 Select all that apply: Which techniques are effective for combating the vanishing gradient problem in deep learning models used for wireless signal classification?
 (0.5 Points)
 
@@ -351,7 +409,9 @@ Applying gradient clipping
 Employing batch normalization
 
 Using ReLU activation function
-21
+
+
+## 21
 Which type of learning algorithm would be most suitable for channel estimation in noisy environments?
 (0.5 Points)
 
@@ -363,7 +423,9 @@ Unsupervised learning
 Supervised learning
 
 Reinforcement learning
-22
+
+
+## 22
 In reinforcement learning, what is the primary disadvantage of using a high discount factor (close to 1)?
 (0.5 Points)
 
@@ -375,7 +437,9 @@ It causes the agent to value immediate rewards over future rewards.
 It reduces the learning speed of the agent.
 
 It significantly simplifies the policy improvement step.
-23
+
+
+## 23
 Which of the following are benefits of using machine learning for dynamic spectrum management? (Select all that apply)
 (0.5 Points)
 
@@ -386,7 +450,10 @@ Enhanced adaptability to new interference conditions
 Reduced computational complexity
 
 Decreased reliance on model assumptions
-24
+
+
+## 24
+
 In an adaptive modulation scheme using a deep learning approach, how does a convolutional neural network (CNN) dynamically adjust its filters in a real-time OFDM system affected by rapidly varying channel conditions?
 (0.5 Points)
 
@@ -398,7 +465,9 @@ By employing a transfer learning model pre-trained on diverse conditions.
 By recalibrating filter weights in response to detected SNR changes.
 
 Through backpropagation applied in real-time to update the network.
-25
+
+
+## 25
 Select all applicable: Which factors must be considered when designing a reinforcement learning agent for dynamic spectrum access in 5G networks?
 (0.5 Points)
 
@@ -409,7 +478,9 @@ The stationarity of the environment.
 The continuous state and action spaces.
 
 The partial observability of the spectrum.
-26
+
+
+## 26
 Which of the following are essential considerations when implementing a machine learning model for interference mitigation in wireless networks? (Select all that apply)
 (0.5 Points)
 
@@ -420,12 +491,16 @@ Energy consumption of the learning algorithm.
 Real-time processing capabilities.
 
 The non-stationarity of network traffic.
-27
+
+
+## 27
 If a reinforcement learning agent observes a sequence of states and rewards over 100 steps with a discount factor of 0.99, compute the cumulative discounted reward starting from step 50 where the reward is 1 for each step until the end.
 (0.5 Points)
 enter a numerical answer up to two decimals only (i.e., truncate your answer up to 2 decimals)
 Enter your answer
-28
+
+
+## 28
 What is the primary purpose of adding a cyclic prefix (CP) in an OFDM system?
 (0.5 Points)
 
@@ -437,7 +512,9 @@ To increase the bandwidth efficiency of the system.
 To simplify the modulation process at the transmitter
 
 To enhance the power efficiency of the transmission.
-29
+
+
+## 29
 Which components are necessary for simulating an OFDM system with channel estimation? (Select all that apply)
 (0.5 Points)
 
@@ -448,7 +525,9 @@ A method for power spectral density calculation
 An algorithm for generating random data bits
 
 Channel and noise modelling
-30
+
+
+## 30
 Statement 1:   Increasing the length of the cyclic prefix beyond the delay spread of the channel can enhance the system's performance.
 Statement 2:   The least squares channel estimation method provides an unbiased estimate of the channel in an OFDM system.
 (0.5 Points)
@@ -461,7 +540,9 @@ Statement 1 is True, Statement 2 is True
 Statement 1 is True, Statement 2 is false
 
 Statement 1 is false, Statement 2 is false
-31
+
+
+## 31
 Model a  Baseline Two–Class Classifier Using a block of N = 1000 symbols per trial and equal priors, simulate the classifier at SNR = 10 dB. 
 
   (For SNR = 10 dB, noise variance σ² = 1/10 = 0.1.) 
@@ -492,7 +573,9 @@ Received signals:
   Use np.random.seed(42) for reproducibility.   
 (1 Point)
 50
-32
+
+
+## 32
 Model  a Baseline Two–Class Classifier Using a block of N = 1000 symbols per trial and equal priors, simulate the classifier at SNR = 10 dB. 
 
   (For SNR = 10 dB, noise variance σ² = 1/10 = 0.1.) 
@@ -526,7 +609,9 @@ The received signal is:
   Use np.random.seed(42) for reproducibility.
 (1 Point)
 50
-33
+
+
+## 33
 Consider the following new modulation classification model. 
 Three modulation schemes are used: BPSK, QPSK, and 16‑QAM. 
 Each signal is generated as a sequence of 1024 symbols with two channels (representing the In-phase and Quadrature components). 
@@ -583,7 +668,9 @@ Output Dense Layer: 3 units with softmax activation      (one unit per modulatio
 90-93%
 
 65-70%
-34
+
+
+## 34
 CNN-LSTM Hybrid for 4-Class Modulation Classification  Model & Simulation Setup:
  You are given four modulation schemes:
  • BPSK: I ∈ {+1, –1}, Q = 0
@@ -630,7 +717,9 @@ Dense Block:
 ~60%
 
 ~30%
-35
+
+
+## 35
 FFT-Feature Based Feedforward Network for 2-Class Classification 
 
 
@@ -697,7 +786,9 @@ Useful data:
 ~70%
 
  ~30%
-36
+
+
+## 36
 MIMO-Based AMC with Concatenated IQ Data for 2-Class Classification 
  Model & Simulation Setup:
 
@@ -768,7 +859,9 @@ Useful data:
 55%
 
  40%  
-37
+
+
+## 37
 Residual CNN for 3-Class Classification in a Multipath Fading Channel 
 
  Model & Simulation Setup: You are given three modulation schemes:
@@ -840,7 +933,9 @@ Output Layer: Dense layer with 3 units and softmax      activation
  ~55%
 
 ~65%
-38
+
+
+## 38
 Bidirectional GRU for 3-Class Classification with Frequency Offset 
 
  Model & Simulation Setup:
@@ -908,7 +1003,9 @@ I.~ 80%
 K.~ 90%
 
 G. ~65%
-39
+
+
+## 39
 CNN-RNN Hybrid for 2-Class Classification in a Doppler Channel 
 
  Model & Simulation Setup:
@@ -974,7 +1071,9 @@ Output Layer: Dense layer with 2 units and softmax      activation
  ~20%
 
 ~70%
-40
+
+
+## 40
 CNN‐Based CFO Estimation for an OFDM System 
  Model & Simulation Setup: 
   # Set seeds for reproducibility
@@ -1035,7 +1134,9 @@ Training: The network is trained using the Adam      optimizer and mean-squared 
  ~0.003
 
 ~0.001 
-41
+
+
+## 41
 CNN‐Based CFO Estimation for a 2×2 MIMO OFDM System 
 
  Model & Simulation Setup: 
@@ -1121,7 +1222,9 @@ Training:
  ~0.0006
 
  ~0.004
-42
+
+
+## 42
 Reinforcement Learning (Q‑Learning) 
   Consider a simple Markov Decision Process (MDP) with three states (S0, S1, S2) and two actions per state (A0 and A1). The transition probabilities and rewards are as follows:  
   
@@ -1151,8 +1254,4 @@ Q(S2, A1)
  Q(S0, A0)
 
  Q(S0, A1)
-Submit
-Microsoft 365
-This content is created by the owner of the form. The data you submit will be sent to the form owner. Microsoft is not responsible for the privacy or security practices of its customers, including those of this form owner. Never give out your password.
-Microsoft Forms | AI-Powered surveys, quizzes and pollsCreate my own form
-Privacy and cookies | Terms of use
+
